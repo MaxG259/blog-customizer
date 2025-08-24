@@ -1,0 +1,31 @@
+import { useState } from 'react';
+import clsx from 'clsx';
+import { Article } from '../article/Article';
+import { ArticleParamsForm } from '../article-params-form/ArticleParamsForm';
+import { defaultArticleState } from '../../constants/articleProps';
+import styles from '../../styles/index.module.scss';
+
+export const App = () => {
+	const [articleState, setArticleState] = useState(defaultArticleState);
+
+	const applySettings = (newSettings: typeof defaultArticleState) => {
+		setArticleState(newSettings);
+	};
+
+	return (
+		<main
+			className={styles.main}
+			style={
+				{
+					'--font-family': articleState.fontFamilyOption.value,
+					'--font-size': articleState.fontSizeOption.value,
+					'--font-color': articleState.fontColor.value,
+					'--container-width': articleState.contentWidth.value,
+					'--bg-color': articleState.backgroundColor.value,
+				} as React.CSSProperties
+			}>
+			<ArticleParamsForm onApply={applySettings} />
+			<Article />
+		</main>
+	);
+};
